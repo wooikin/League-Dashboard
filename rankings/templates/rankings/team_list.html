@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
 <head>
     <title>Ranking Table</title>
 </head>
@@ -33,17 +39,17 @@
     <table>
         <tr>
             <th>Home Team</th>
-            <th>Away Team</th>
             <th>Home Score</th>
             <th>Away Score</th>
+            <th>Away Team</th>
             <th>Actions</th>
         </tr>
         {% for match in matches %}
         <tr>
             <td>{{ match.home_team.name }}</td>
-            <td>{{ match.away_team.name }}</td>
             <td>{{ match.home_score }}</td>
             <td>{{ match.away_score }}</td>
+            <td>{{ match.away_team.name }}</td>
             <td>
                 <a href="{% url 'match_update' match.id %}">Edit</a>
                 <a href="{% url 'match_delete' match.id %}">Delete</a>         
