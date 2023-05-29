@@ -10,7 +10,7 @@ class TeamListView(ListView):
     model = Team
     template_name = 'rankings/team_list.html'
     context_object_name = 'teams'
-    ordering = ['-points', 'name']
+    ordering = ['-points', '-goal_difference', 'name']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
