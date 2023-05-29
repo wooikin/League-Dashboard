@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ranking Table</title>
+</head>
+<body>
+
+    {% if user.is_authenticated %}
+        <p>Welcome, {{ user.username }}!</p>
+        <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+
+    <h1>Ranking Table</h1>
+    <table>
+        <tr>
+            <th>Team</th>
+            <th>Points</th>
+            <th>Goal Difference</th>
+        </tr>
+        {% for team in teams %}
+        <tr>
+            <td>{{ team.name }}</td>
+            <td>{{ team.points }}</td>
+            <td>{{ team.goal_difference }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>All Matches</h2>
+    <table>
+        <tr>
+            <th>Home Team</th>
+            <th>Away Team</th>
+            <th>Home Score</th>
+            <th>Away Score</th>
+            <th>Actions</th>
+        </tr>
+        {% for match in matches %}
+        <tr>
+            <td>{{ match.home_team.name }}</td>
+            <td>{{ match.away_team.name }}</td>
+            <td>{{ match.home_score }}</td>
+            <td>{{ match.away_score }}</td>
+            <td>
+                <a href="{% url 'match_update' match.id %}">Edit</a>
+                <a href="{% url 'match_delete' match.id %}">Delete</a>         
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if user.is_authenticated %}
+    <h2>Add Match</h2>
+    <a href="{% url 'match_create' %}">Add a new match</a>
+
+    <h2>Upload CSV</h2>
+    <form method="post" enctype="multipart/form-data" action="{% url 'process_csv' %}">
+        {% csrf_token %}
+        <input type="file" name="csv_file" accept=".csv" required>
+        <button type="submit">Upload CSV</button>
+    </form>
+    {% endif %}
+
+</body>
+</html>
